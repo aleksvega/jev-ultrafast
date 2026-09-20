@@ -1,3 +1,8 @@
+[![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
+[![Fork of browser-use/jev-ultrafast](https://img.shields.io/badge/fork%20of-browser--use%2Fjev--ultrafast-blue)](https://github.com/browser-use/jev-ultrafast)
+[![Backend: OpenRouter or TypeSafe](https://img.shields.io/badge/backend-OpenRouter%20or%20TypeSafe-purple)](#fork-additions-run-with-your-openrouter-key-no-typesafe-account)
+[![no window](https://img.shields.io/badge/runs-headless-orange)](#fork-additions-run-with-your-openrouter-key-no-typesafe-account)
+
 <img src="docs/banner.svg" alt="Jev Ultrafast · Browser Use × TypeSafe" width="100%" />
 
 # Jev Ultrafast ⚡
