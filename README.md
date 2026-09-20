@@ -157,7 +157,12 @@ Tests are offline. `uv run python scripts/check_guards.py` checks real controls 
 
 [Browser Use](https://github.com/browser-use/browser-use) · [Browser Harness](https://github.com/browser-use/browser-harness) · [TypeSafe speculative fan-out](https://docs.typesafe.ai/patterns/fan-out)
 
-## Fork additions: run with your OpenRouter key (no TypeSafe account)
+## Fork additions
+
+**TYPE_TEXT via Mercury (diffusion LLM)**: with only OPENROUTER_API_KEY set, form-filling
+text defaults to `inception/mercury-2` on OpenRouter (no DeepSeek key needed). Override with
+TEXT_MODEL / TEXT_MODEL_BASE_URL; set TEXT_MODEL_API_KEY to use the DeepSeek-style path.
+: run with your OpenRouter key (no TypeSafe account)
 
 This fork adds an OpenRouter backend to the decision call. Set only
 `OPENROUTER_API_KEY` (and no `TYPESAFE_API_KEY`) and the agent talks to
