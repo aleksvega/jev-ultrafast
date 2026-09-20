@@ -115,8 +115,18 @@ def choose(state, goal, history):
         },
         "questions": questions,
     }
+    # Endpoint selection: official TypeSafe API, or OpenRouter /api/alpha/decisions
+    # when OPENROUTER_API_KEY is set and no TypeSafe key is present. Same wire format.
+    openrouter_mode = bool(os.environ.get("OPENROUTER_API_KEY")) and not os.environ.get("TYPESAFE_API_KEY")
+    if openrouter_mode:
+        body["model"] = os.environ.get("TYPESAFE_MODEL", "typesafe/jev-1.13:latest")
+        base_url = os.environ.get("TYPESAFE_BASE_URL", "https://openrouter.ai/api/alpha/decisions")
+        api_key = os.environ["OPENROUTER_API_KEY"]
+    else:
+        base_url = os.environ.get("TYPESAFE_BASE_URL", "https://api.typesafe.ai/v1/systemone")
+        api_key = os.environ["TYPESAFE_API_KEY"]
     started = time.perf_counter()
-    result = post_json("https://api.typesafe.ai/v1/systemone", os.environ["TYPESAFE_API_KEY"], body)
+    result = post_json(base_url, api_key, body)
     operation_answer = validate_choice(result["answers"].get("operation", {}), operations)
     operation = operation_answer["choice"]
     target = None

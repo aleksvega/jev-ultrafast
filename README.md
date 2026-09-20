@@ -140,3 +140,20 @@ Tests are offline. `uv run python scripts/check_guards.py` checks real controls 
 ---
 
 [Browser Use](https://github.com/browser-use/browser-use) · [Browser Harness](https://github.com/browser-use/browser-harness) · [TypeSafe speculative fan-out](https://docs.typesafe.ai/patterns/fan-out)
+
+## Fork additions: run with your OpenRouter key (no TypeSafe account)
+
+This fork adds an OpenRouter backend to the decision call. Set only
+`OPENROUTER_API_KEY` (and no `TYPESAFE_API_KEY`) and the agent talks to
+OpenRouter's Jev endpoint (`/api/alpha/decisions`, model
+`typesafe/jev-1.13:latest`). For `TYPE_TEXT` you still need a text model —
+use any OpenRouter chat model via `TEXT_MODEL_BASE_URL=https://openrouter.ai/api/v1`,
+`TEXT_MODEL=<model>`, `TEXT_MODEL_API_KEY=$OPENROUTER_API_KEY`.
+
+Headless/background runs (no window pops up):
+
+\`\`\`bash
+npm install -g cdp-browser-launcher
+cdp-browser-launcher start --mode headless
+\`\`\`
+
