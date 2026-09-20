@@ -1,0 +1,32 @@
+{
+  "name": "jev-ultrafast",
+  "version": "0.1.0",
+  "description": "Browser agent that acts in ~0.5s per step via Jev. Headless-ready, works on your OpenRouter key. Python env bootstrapped on first run.",
+  "license": "MIT",
+  "bin": {
+    "jev-ultrafast": "bin/jev-ultrafast.mjs"
+  },
+  "files": [
+    "bin",
+    "jev_ultrafast",
+    "examples",
+    "pyproject.toml",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "browser-agent",
+    "jev",
+    "openrouter",
+    "headless",
+    "cdp",
+    "ai-agents"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/aleksvega/jev-ultrafast.git"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

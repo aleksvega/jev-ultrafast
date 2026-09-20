@@ -21,6 +21,17 @@ Give it one goal. [TypeSafe's Jev](https://docs.typesafe.ai/introduction) picks 
 
 [Watch the MP4](docs/demo.mp4) · [Measurements](docs/performance.md) · [Read the loop](jev_ultrafast/agent.py)
 
+## Install (any agent, any IDE)
+
+```bash
+npm install -g jev-ultrafast
+export OPENROUTER_API_KEY=...            # your existing key; no TypeSafe account
+jev-ultrafast --url https://example.com --goal "Click the More information link"
+```
+First run bootstraps a Python venv inside the package (uv if present, else venv+pip).
+Works from Claude Code, Codex, Cursor, or any shell. Pair with cdp-browser-launcher
+for headless: `cdp-browser-launcher start --mode headless`, then `export BU_CDP_URL=http://127.0.0.1:9223`.
+
 ## The action space
 
 Every observation produces a new element table:
