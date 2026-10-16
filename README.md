@@ -25,7 +25,8 @@ Give it one goal. [TypeSafe's Jev](https://docs.typesafe.ai/introduction) picks 
 
 ```bash
 npm install -g jev-ultrafast
-export OPENROUTER_API_KEY=...            # your existing key; no TypeSafe account
+export OPENROUTER_API_KEY=...            # default: OpenRouter, your existing key
+# Any provider: JEV_API_KEY=... (+ JEV_BASE_URL for a non-OpenRouter endpoint)
 jev-ultrafast --url https://example.com --goal "Click the More information link"
 ```
 First run bootstraps a Python venv inside the package (uv if present, else venv+pip).
@@ -73,7 +74,7 @@ git clone https://github.com/browser-use/jev-ultrafast.git
 cd jev-ultrafast
 uv sync
 cp .env.example .env
-# Add TYPESAFE_API_KEY and TEXT_MODEL_API_KEY.
+# Add OPENROUTER_API_KEY (default) or TYPESAFE_API_KEY, plus TEXT_MODEL_API_KEY.
 uv run jev
 ```
 

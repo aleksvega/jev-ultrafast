@@ -115,16 +115,35 @@ def choose(state, goal, history):
         },
         "questions": questions,
     }
-    # Endpoint selection: official TypeSafe API, or OpenRouter /api/alpha/decisions
-    # when OPENROUTER_API_KEY is set and no TypeSafe key is present. Same wire format.
-    openrouter_mode = bool(os.environ.get("OPENROUTER_API_KEY")) and not os.environ.get("TYPESAFE_API_KEY")
-    if openrouter_mode:
-        body["model"] = os.environ.get("TYPESAFE_MODEL", "typesafe/jev-1.13:latest")
-        base_url = os.environ.get("TYPESAFE_BASE_URL", "https://openrouter.ai/api/alpha/decisions")
-        api_key = os.environ["OPENROUTER_API_KEY"]
+    # Key selection (first match wins): JEV_API_KEY (any provider) >
+    # OPENROUTER_API_KEY (default) > TYPESAFE_API_KEY (official API).
+    api_key = (
+        os.environ.get("JEV_API_KEY")
+        or os.environ.get("OPENROUTER_API_KEY")
+        or os.environ.get("TYPESAFE_API_KEY")
+    )
+    if not api_key:
+        raise ValueError(
+            "jev-ultrafast needs a key: set OPENROUTER_API_KEY (default), "
+            "TYPESAFE_API_KEY (official API), or JEV_API_KEY for any custom "
+            "provider (pair it with JEV_BASE_URL)"
+        )
+    # Endpoint selection: JEV_BASE_URL (any provider) > TYPESAFE_BASE_URL
+    # (legacy override) > official TypeSafe API when only TYPESAFE_API_KEY is
+    # set > OpenRouter /api/alpha/decisions (default). Same wire format.
+    use_typesafe = bool(os.environ.get("TYPESAFE_API_KEY")) and not (
+        os.environ.get("JEV_API_KEY") or os.environ.get("OPENROUTER_API_KEY")
+    )
+    override_url = os.environ.get("JEV_BASE_URL") or os.environ.get("TYPESAFE_BASE_URL")
+    if override_url:
+        base_url = override_url
+    elif use_typesafe:
+        base_url = "https://api.typesafe.ai/v1/systemone"
     else:
-        base_url = os.environ.get("TYPESAFE_BASE_URL", "https://api.typesafe.ai/v1/systemone")
-        api_key = os.environ["TYPESAFE_API_KEY"]
+        base_url = "https://openrouter.ai/api/alpha/decisions"
+    if not use_typesafe:
+        # OpenRouter and custom providers use the routed model id.
+        body["model"] = os.environ.get("TYPESAFE_MODEL", "typesafe/jev-1.13:latest")
     started = time.perf_counter()
     result = post_json(base_url, api_key, body)
     operation_answer = validate_choice(result["answers"].get("operation", {}), operations)
